@@ -1,9 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import {animal} from "../models/animal";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __filename: string = fileURLToPath(import.meta.url);
+const __dirname: string = path.dirname(__filename);
 
 const filePath = path.join(__dirname, '../data/zoo.json');
 
