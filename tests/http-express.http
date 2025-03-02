@@ -1,0 +1,41 @@
+### GET request to example server
+GET http://localhost:3000/animals
+
+###
+GET http://localhost:3000/animals/id/1
+
+###
+GET http://localhost:3000/animals/endangered
+
+###
+GET http://localhost:3000/animals/habitat/Savanna
+
+###
+GET http://localhost:3000/animals/species?species=Lion
+
+###
+POST http://localhost:3000/animals/addanimal
+Content-Type: application/json; charset=utf-8
+
+{
+  "name": "Baloo",
+  "species": "Bear",
+  "age": 5,
+  "isEndangered": false,
+  "habitat": "Jungle"
+}
+
+###
+PUT http://localhost:3000/animals/updateanimal/3
+Content-Type: application/json
+
+{
+  "name": "Panda",
+  "species": "Bear",
+  "age": 9,
+  "isEndangered": true,
+  "habitat": "Forest"
+}
+
+###
+DELETE http://localhost:3000/animals/deleteanimal/2
