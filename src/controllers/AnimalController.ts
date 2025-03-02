@@ -1,5 +1,5 @@
 import express, {Request, Response} from 'express';
-import {animalService} from '../services/AnimalService.js';
+import {animalService} from '../services/AnimalService';
 import {animal} from "../models/animal";
 
 const app = express();

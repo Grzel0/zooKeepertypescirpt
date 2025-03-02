@@ -1,10 +1,9 @@
 import express, {Application} from 'express';
-import bodyParser from 'body-parser';
 import animalRouter from "./routes/animal.routes";
 
 const app: Application = express();
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.use('/', animalRouter);
 app.use('/id/:id', animalRouter);
