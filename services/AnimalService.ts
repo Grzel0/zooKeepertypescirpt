@@ -1,55 +1,58 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import {animal} from "../models/animal";
+import {animal} from "../models/animal.js";
 
 const __filename: string = fileURLToPath(import.meta.url);
 const __dirname: string = path.dirname(__filename);
 
-const filePath = path.join(__dirname, '../data/zoo.json');
+const filePath: string = path.join(__dirname, '../data/zoo.json');
+type AnimalData = Omit<animal, 'id'>
 
-function readData() {
-    const data = fs.readFileSync(filePath, 'utf-8');
-    return JSON.parse(data);
+function readData(): animal[] {
+    const data: string = fs.readFileSync(filePath, 'utf-8');
+    return JSON.parse(data) as animal[];
 }
 
-function writeData(data) {
+function writeData(data: animal[]): void {
     fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
 }
-const getAllAnimals = () => readData();
+const getAllAnimals:() => animal[] = (): animal[] => readData();
 
-const getEndangeredAnimals = () => {
-    const animals = readData();
+
+
+const getEndangeredAnimals:() => animal[] = (): animal[] => {
+    const animals: animal[] = readData();
     return animals.filter(animal => animal.isEndangered === true);
 };
 
-const getAnimalById = (id) => {
-    const animals = readData();
+const getAnimalById = (id: number) => {
+    const animals: animal[] = readData();
     return animals.find(animal => animal.id === id);
 };
 
-const getAnimalsByHabitat = (habitat) => {
-    const animals = readData();
+const getAnimalsByHabitat = (habitat: string): animal[] => {
+    const animals: animal[] = readData();
     return animals.filter(animal => animal.habitat.toLowerCase() === habitat.toLowerCase());
 };
 
-const getAnimalsBySpecies = (species) => {
-    const animals = readData();
+const getAnimalsBySpecies = (species: string): animal[] => {
+    const animals: animal[] = readData();
     return animals.filter(animal => animal.species.toLowerCase() === species.toLowerCase());
 };
 
-const addAnimal = (newAnimal) => {
-    const animals = readData();
-    const id = animals.length ? animals[animals.length - 1].id + 1 : 1;
+const addAnimal = (newAnimal: AnimalData): animal => {
+    const animals: animal[] = readData();
+    const id: number = animals.length ? animals[animals.length - 1].id + 1 : 1;
     const animal = { id, ...newAnimal };
     animals.push(animal);
     writeData(animals);
     return animal;
 };
 
-const updateAnimal = (id, updatedData) => {
-    const animals = readData();
-    const index = animals.findIndex(animal => animal.id === id);
+const updateAnimal = (id: number, updatedData: Partial<AnimalData>) => {
+    const animals: animal[] = readData();
+    const index: number = animals.findIndex(animal => animal.id === id);
     if (index !== -1) {
         animals[index] = { ...animals[index], ...updatedData };
         writeData(animals);
@@ -58,9 +61,9 @@ const updateAnimal = (id, updatedData) => {
     return null;
 };
 
-const deleteAnimal = (id) => {
-    const animals = readData();
-    const index = animals.findIndex(animal => animal.id === id);
+const deleteAnimal = (id: number): boolean => {
+    const animals: animal[] = readData();
+    const index: number = animals.findIndex(animal => animal.id === id);
     if (index !== -1) {
         animals.splice(index, 1);
         writeData(animals);
